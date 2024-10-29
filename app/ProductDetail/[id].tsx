@@ -39,7 +39,9 @@ export default function ProductDetail() {
           .single();
           let { data: product1, error:m } = await supabase
           .from('Product')
-          .select('*');
+          .select('*')
+          .eq('category_id',product.category_id)
+          .neq('id',id);
         if (error) {
           console.error('Error fetching product:', error.message);
           return;

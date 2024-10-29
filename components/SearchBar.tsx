@@ -27,11 +27,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     <View style={styles.searchContainer}>
       <TextInput
         style={styles.searchInput}
-        placeholder="Search products..."
+        placeholder="Tìm kiếm sản phẩm..."
         placeholderTextColor="#fff"
         value={searchQuery}
         onChangeText={setSearchQuery}
-        onSubmitEditing={handleSearch} // Trigger search on enter
+        onSubmitEditing={handleSearch} 
       />
       <Pressable onPress={handleSearch}>
         <Icon name="search-outline" size={25} color="white" />

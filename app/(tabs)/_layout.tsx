@@ -17,7 +17,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Nhà',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
           ),
@@ -26,7 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="product"
         options={{
-          title: 'Products',
+          title: 'Sản phẩm',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color={color} />
           ),
@@ -35,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="user"
         options={{
-          title: 'User',
+          title: 'Người dùng',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
           ),

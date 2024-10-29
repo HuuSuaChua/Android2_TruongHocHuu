@@ -54,7 +54,7 @@ export default function ProductHot() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hot Products</Text>
+      <Text style={styles.title}>Sản Phẩm Hot</Text>
       <FlatList
         data={hotProducts}
         keyExtractor={(item) => item.id.toString()}

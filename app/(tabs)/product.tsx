@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
-import { supabase } from './../../utils/supabase'; // Đường dẫn đến Supabase client
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { supabase } from './../../utils/supabase';
 import ProductItem from '@/components/ProductItem';
 import { router } from 'expo-router';
 
-// Khai báo kiểu dữ liệu cho sản phẩm
+// Define the product type
 interface Product {
   id: number;
   name: string;
   img: string;
   detail: string;
-  price: number; // Thêm trường price
+  price: number;
 }
 
 export default function ProductList() {
@@ -18,12 +18,11 @@ export default function ProductList() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Gọi API Supabase để lấy danh sách sản phẩm từ bảng Product
     const fetchProducts = async () => {
       try {
         const { data, error } = await supabase
           .from('Product')
-          .select('id, name, img, detail, price'); // Thêm 'price' vào select
+          .select('id, name, img, detail, price');
         
         if (error) {
           console.error('Error fetching products:', error.message);
@@ -43,66 +42,90 @@ export default function ProductList() {
     fetchProducts();
   }, []);
 
-  // Hiển thị loading khi đang tải dữ liệu
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading products...</Text>
-      </View>
-    );
-  }
   const handlePress = (productId: number) => {
     router.push(`/ProductDetail/${productId}`); 
   };
-  // Hiển thị danh sách sản phẩm
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#6200EE" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Product List</Text>
       <FlatList
-      style={{marginBottom:10}}
         data={products}
+        numColumns={2} // Display items in 2 columns
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ProductItem product={item} onPress={() => handlePress(item.id)} /> 
+          <ProductItem product={item} onPress={() => handlePress(item.id)} />
         )}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       />
-      </View>
-
-  )
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
+    flex: 1,
+    paddingTop: 40,
+    paddingHorizontal: 10,
+  },
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    alignItems: 'center',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  productContainer: {
     marginBottom: 15,
+    textAlign: 'center',
+  },
+  row: {
+    justifyContent: 'space-between', // Space between columns
+  },
+  listContent: {
+    paddingBottom: 20,
+  },
+});
+
+export const productItemStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 5,
     padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    alignItems: 'center',
+    elevation: 2, // Shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  productTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  image: {
+    width: '100%',
+    height: 120,
+    borderRadius: 8,
   },
-  productImage: {
-    width: 100,
-    height: 100,
-    marginVertical: 10,
-  },
-  productPrice: {
+  title: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  price: {
+    fontSize: 14,
     color: '#f00',
+    fontWeight: 'bold',
+    marginTop: 4,
   },
 });

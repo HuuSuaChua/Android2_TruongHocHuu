@@ -50,28 +50,28 @@ export default function Login() {
           source={require('@/assets/images/logo.jpg')}
           style={styles.image}
         />
-        <Text style={styles.title}>Login</Text>
+        <Text style={styles.title}>Đăng nhập</Text>
         <TextInput
           style={styles.input}
           value={username}
           onChangeText={setUsername}
-          placeholder="Username"
+          placeholder="Tên đăng nhập"
           placeholderTextColor="#888"
         />
         <TextInput
           style={styles.input}
           value={password}
           onChangeText={setPassword}
-          placeholder="Password"
+          placeholder="Mật khẩu"
           secureTextEntry
           placeholderTextColor="#888"
         />
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Đăng nhập</Text>
         </TouchableOpacity>
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
-          <Link style={styles.footerLink} href={'/SignupScreen'}>Sign Up</Link>
+          <Text style={styles.footerText}>Bạn chưa có tài khoản? </Text>
+          <Link style={styles.footerLink} href={'/SignupScreen'}>Đăng ký</Link>
         </View>
       </View>
     </ImageBackground>

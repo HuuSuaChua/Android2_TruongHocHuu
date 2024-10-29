@@ -5,7 +5,8 @@ import { supabase } from "@/utils/supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
-
+import * as Location from "expo-location";
+import AddressMap from "@/components/GGMap";
 interface CartItem {
   product: {
     id: number;
@@ -22,7 +23,10 @@ export default function CheckoutScreen() {
 
   const [paymentMethod, setPaymentMethod] = useState<string>("cash"); // Phương thức thanh toán
   const [shippingAddress, setShippingAddress] = useState<string>(""); // Địa chỉ giao hàng
-
+  const [location, setLocation] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const onClose = () => setIsVisible(false);
+ 
   // Function để lưu thông tin chi tiết đơn hàng vào OrderDetail
   const insertOrderDetails = async (orderId: number) => {
     const orderDetails = cart.map((item) => ({
@@ -113,7 +117,8 @@ export default function CheckoutScreen() {
         renderItem={renderItem}
         keyExtractor={(item) => item.product.id.toString()}
       />
-
+     
+<Text>{location}</Text>
       {/* Địa chỉ giao hàng */}
       <View style={styles.addressContainer}>
         <Text style={styles.label}>Địa chỉ giao hàng:</Text>
